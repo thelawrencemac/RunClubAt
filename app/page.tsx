@@ -12,30 +12,29 @@ const PhoneNumberForm = ({
   isSubmitting: boolean;
   error: string | null;
 }) => {
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const phone = formData.get("phone") as string;
-    await onSubmit(phone);
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const phone = event.target.value.replace(/\D/g, ""); // Remove non-digits
+    if (phone.length === 10) {
+      // Submit when we have exactly 10 digits
+      await onSubmit(phone);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={(e) => e.preventDefault()}>
       <input
         type="tel"
         name="phone"
-        placeholder="e.g. (555) 123-4567"
+        placeholder="e.g. 5551234567"
         required
+        onChange={handleChange}
+        maxLength={10}
+        pattern="[0-9]*"
+        inputMode="numeric"
         className="w-full p-3 border border-gray-300 rounded mb-4"
       />
       {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-900 transition disabled:opacity-50"
-      >
-        {isSubmitting ? "Submitting..." : "Submit"}
-      </button>
+      {isSubmitting && <p className="text-gray-600 text-sm">Submitting...</p>}
     </form>
   );
 };
@@ -44,6 +43,7 @@ export default function Page() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleSubmit = async (phone: string) => {
     setIsSubmitting(true);
@@ -66,14 +66,19 @@ export default function Page() {
         throw new Error(data.error || "Something went wrong");
       }
 
-      alert("Thanks! You're on the list.");
-      setIsModalOpen(false);
+      setIsSuccess(true);
     } catch (err) {
       console.error("Error submitting form:", err);
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsSuccess(false);
+    setError(null);
   };
 
   return (
@@ -113,15 +118,28 @@ export default function Page() {
         Send me this app!
       </button>
 
-      <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
+      <Modal isModalOpen={isModalOpen} setIsModalOpen={closeModal}>
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-2">Sending now!</h2>
-          <p className="mb-4">Enter your phone number:</p>
-          <PhoneNumberForm
-            onSubmit={handleSubmit}
-            isSubmitting={isSubmitting}
-            error={error}
-          />
+          {!isSuccess ? (
+            <>
+              <h2 className="text-2xl font-bold mb-2">Sending now!</h2>
+              <p className="mb-4">Enter your phone number:</p>
+              <PhoneNumberForm
+                onSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
+                error={error}
+              />
+            </>
+          ) : (
+            <div className="py-4">
+              <h2 className="text-2xl font-bold mb-2">
+                We&apos;ll be in touch!
+              </h2>
+              <p className="text-gray-600">
+                Thanks for your interest in Run Club @
+              </p>
+            </div>
+          )}
         </div>
       </Modal>
     </div>
