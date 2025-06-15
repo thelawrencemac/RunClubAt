@@ -13,9 +13,8 @@ const PhoneNumberForm = ({
   error: string | null;
 }) => {
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const phone = event.target.value.replace(/\D/g, ""); // Remove non-digits
+    const phone = event.target.value.replace(/\D/g, "");
     if (phone.length === 10) {
-      // Submit when we have exactly 10 digits
       await onSubmit(phone);
     }
   };
@@ -50,25 +49,17 @@ export default function Page() {
     setError(null);
 
     try {
-      console.log("Making API request to /api/phone-numbers");
       const response = await fetch("/api/phone-numbers", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone }),
       });
 
       const data = await response.json();
-      console.log("API Response:", data);
-
-      if (!response.ok) {
-        throw new Error(data.error || "Something went wrong");
-      }
+      if (!response.ok) throw new Error(data.error || "Something went wrong");
 
       setIsSuccess(true);
     } catch (err) {
-      console.error("Error submitting form:", err);
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setIsSubmitting(false);
@@ -87,19 +78,22 @@ export default function Page() {
       <h1 className="text-5xl md:text-7xl font-bold mb-2">CLUB</h1>
       <h1 className="text-6xl font-extrabold mb-4">@</h1>
 
-      <div className="text-4xl md:text-6xl font-extrabold mt-8 leading-tight">
-        COMING SOON!
-        <span className="block text-lg md:text-xl font-normal mt-2">
-          The fastest way to launch and lead a run club —<br />
-          Strava-linked, SMS-powered, and ready to print.
-        </span>
-      </div>
+      <br />
+      <h1 className="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">
+        Launch Your Run Club in Minutes
+      </h1>
+      <p className="text-lg md:text-xl max-w-xl mx-auto text-white/90 font-light drop-shadow-md mb-6">
+        <br />
+        Strava-Linked. SMS-Powered. Ready to Go.
+        <br />
+        Auto-text invites, printable flyers, and Strava routes built in.
+      </p>
 
-      <div className="mt-6 bg-white text-gray-800 rounded-xl p-4 max-w-xs text-left shadow-lg text-sm">
-        <p className="font-bold mb-2">📲 Text preview:</p>
+      <div className="mt-4 bg-white text-gray-800 rounded-xl p-4 max-w-xs text-left shadow-lg text-sm">
+        <p className="font-bold mb-2">📲 What your runners get:</p>
         <p>
-          Hey it&apos;s Taylor! Run Club @ Riverside starts at 7AM. Here&apos;s
-          the route:{" "}
+          Hey it&apos;s Taylor! Run Club @ Riverside starts at 7AM. Here's the
+          route:{" "}
           <a
             href="https://strava.app.link/WXHitskScUb"
             className="text-blue-600 underline"
@@ -109,21 +103,24 @@ export default function Page() {
             strava.app.link/WXHitskScUb
           </a>
         </p>
+        <p className="text-xs text-gray-500 mt-2">Auto sent before each run.</p>
       </div>
 
       <button
         onClick={() => setIsModalOpen(true)}
         className="mt-8 px-6 py-3 text-lg bg-white text-gray-800 font-semibold rounded-md hover:bg-gray-100 transition"
       >
-        Send me this app!
+        Get Early Access
       </button>
 
       <Modal isModalOpen={isModalOpen} setIsModalOpen={closeModal}>
         <div className="text-center">
           {!isSuccess ? (
             <>
-              <h2 className="text-2xl font-bold mb-2">Sending now!</h2>
-              <p className="mb-4">Enter your phone number:</p>
+              <h2 className="text-2xl font-bold mb-2">Get the app first!</h2>
+              <p className="mb-4">
+                Enter your phone number to join the waitlist:
+              </p>
               <PhoneNumberForm
                 onSubmit={handleSubmit}
                 isSubmitting={isSubmitting}
@@ -132,11 +129,9 @@ export default function Page() {
             </>
           ) : (
             <div className="py-4">
-              <h2 className="text-2xl font-bold mb-2">
-                We&apos;ll be in touch!
-              </h2>
+              <h2 className="text-2xl font-bold mb-2">You're on the list!</h2>
               <p className="text-gray-600">
-                Thanks for your interest in Run Club @
+                We'll text you as soon as it's live.
               </p>
             </div>
           )}
