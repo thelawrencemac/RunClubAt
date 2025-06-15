@@ -92,8 +92,8 @@ export default function Page() {
       <div className="mt-4 bg-white text-gray-800 rounded-xl p-4 max-w-xs text-left shadow-lg text-sm">
         <p className="font-bold mb-2">📲 What your runners get:</p>
         <p>
-          Hey it&apos;s Taylor! Run Club @ Riverside starts at 7AM. Here's the
-          route:{" "}
+          Hey it&apos;s Taylor! Run Club @ Riverside starts at 7AM. Here&apos;s
+          the route:{" "}
           <a
             href="https://strava.app.link/WXHitskScUb"
             className="text-blue-600 underline"
@@ -129,9 +129,11 @@ export default function Page() {
             </>
           ) : (
             <div className="py-4">
-              <h2 className="text-2xl font-bold mb-2">You're on the list!</h2>
+              <h2 className="text-2xl font-bold mb-2">
+                You&apos;re on the list!
+              </h2>
               <p className="text-gray-600">
-                We'll text you as soon as it's live.
+                We&apos;ll text you as soon as it&apos;s live.
               </p>
             </div>
           )}
