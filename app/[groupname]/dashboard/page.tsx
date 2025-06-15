@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Modal from "@/components/Modal";
 
 export default function Dashboard({
   params,
@@ -19,6 +20,7 @@ export default function Dashboard({
   const [isPublishing, setIsPublishing] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     async function fetchGroup() {
@@ -62,6 +64,7 @@ export default function Dashboard({
       });
       if (!res.ok) throw new Error("Failed to publish");
       setSuccess(true);
+      setIsModalOpen(true);
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -149,7 +152,26 @@ export default function Dashboard({
             {isPublishing ? "Publishing..." : "Publish"}
           </button>
           {success && (
-            <p className="text-green-600 text-center mt-2">Published!</p>
+            <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
+              <div className="text-center">
+                <h2 className="text-2xl font-bold mb-2">Your Flyer is Live!</h2>
+                <p className="mb-4">Share this link with your group:</p>
+                <a
+                  href={`/${params.groupname}`}
+                  className="text-blue-600 underline break-all"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {`${window.location.origin}/${params.groupname}`}
+                </a>
+                <button
+                  className="mt-6 px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </Modal>
           )}
           {error && <p className="text-red-600 text-center mt-2">{error}</p>}
         </form>

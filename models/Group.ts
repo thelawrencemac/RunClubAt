@@ -11,22 +11,18 @@ const groupSchema = new mongoose.Schema(
     },
     timeAndDate: {
       type: String,
-      required: true,
     },
     packLead1: {
       type: String,
-      required: true,
     },
     packLead2: {
       type: String,
     },
     stravaLink: {
       type: String,
-      required: true,
     },
     startLocation: {
       type: String,
-      required: true,
     },
     slogan: {
       type: String,
