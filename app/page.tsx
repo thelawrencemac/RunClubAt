@@ -84,9 +84,9 @@ export default function Page() {
       </h1>
       <div className="text-lg md:text-xl max-w-xl mx-auto text-white/90 font-light drop-shadow-md mb-6">
         <div className="bg-black/60 rounded-lg px-4 py-3 inline-block font-semibold text-white">
-          Strava-Linked. SMS-Powered.
+          Strava-Linked. SMS-Powered, Auto-text invites,
           <br />
-          Auto-text invites, printable flyers, and Strava routes built in.
+          printable flyers, and Strava routes built in.
         </div>
       </div>
 
