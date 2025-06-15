@@ -82,12 +82,13 @@ export default function Page() {
       <h1 className="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">
         Launch Your Run Club in Minutes
       </h1>
-      <p className="text-lg md:text-xl max-w-xl mx-auto text-white/90 font-light drop-shadow-md mb-6">
-        <br />
-        Strava-Linked. SMS-Powered. Ready to Go.
-        <br />
-        Auto-text invites, printable flyers, and Strava routes built in.
-      </p>
+      <div className="text-lg md:text-xl max-w-xl mx-auto text-white/90 font-light drop-shadow-md mb-6">
+        <div className="bg-black/60 rounded-lg px-4 py-3 inline-block font-semibold text-white">
+          Strava-Linked. SMS-Powered.
+          <br />
+          Auto-text invites, printable flyers, and Strava routes built in.
+        </div>
+      </div>
 
       <div className="mt-4 bg-white text-gray-800 rounded-xl p-4 max-w-xs text-left shadow-lg text-sm">
         <p className="font-bold mb-2">📲 What your runners get:</p>
