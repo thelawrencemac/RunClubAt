@@ -1,25 +1,28 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function SetupGroup() {
   const [groupName, setGroupName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
     try {
+      // Get user _id from API
+      const userRes = await fetch(`/api/users/me`);
+      const userData = await userRes.json();
+      const adminId = userData.id;
       const res = await fetch("/api/groups", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          groupName,
-          adminId: "000000000000000000000000",
-        }), // TODO: use real user id
+        body: JSON.stringify({ groupName, adminId }),
       });
       if (res.status === 409) {
         setError("Group name already taken");

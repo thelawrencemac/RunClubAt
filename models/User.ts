@@ -36,10 +36,9 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    groupName: {
-      type: String,
-      unique: true,
-      sparse: true,
+    groupNames: {
+      type: [String],
+      default: [],
     },
   },
   {

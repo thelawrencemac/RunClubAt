@@ -93,8 +93,8 @@ export default function Page() {
       <div className="mt-4 bg-white text-gray-800 rounded-xl p-4 max-w-xs text-left shadow-lg text-sm">
         <p className="font-bold mb-2">📲 What your runners get:</p>
         <p>
-          Hey it&apos;s Taylor! Run Club @ Riverside starts at 7AM. Here&apos;s
-          the route:{" "}
+          Hey it&apos;s Lawrence! Run Club @ Riverside starts at 7AM.
+          Here&apos;s the route:{" "}
           <a
             href="https://strava.app.link/WXHitskScUb"
             className="text-blue-600 underline"

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Modal from "@/components/Modal";
+import SMSNotification from "@/components/SMSNotification";
 
 export default function Dashboard({
   params,
@@ -76,6 +77,18 @@ export default function Dashboard({
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-orange-500 via-yellow-300 to-green-300 p-4">
       <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full">
         <h1 className="text-2xl font-bold mb-4">Edit Group Flyer</h1>
+
+        {/* SMS Notification Section */}
+        <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+          <h2 className="text-lg font-semibold mb-3">Group Communications</h2>
+          <SMSNotification
+            groupName={params.groupname}
+            onSend={(result) => {
+              console.log("SMS sent:", result);
+            }}
+          />
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block font-semibold mb-1">Group Name</label>

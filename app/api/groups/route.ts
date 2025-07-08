@@ -24,6 +24,8 @@ export async function POST(req: NextRequest) {
   // Create group
   const group = await Group.create({ ...data, adminId });
   // Update user
-  await User.findByIdAndUpdate(adminId, { groupName });
+  await User.findByIdAndUpdate(adminId, {
+    $addToSet: { groupNames: groupName },
+  });
   return NextResponse.json(group);
 }

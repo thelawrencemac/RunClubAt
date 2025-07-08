@@ -32,6 +32,22 @@ const groupSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    members: [
+      {
+        phoneNumber: {
+          type: String,
+          required: true,
+        },
+        name: {
+          type: String,
+          default: "",
+        },
+        joinedAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
